@@ -6,18 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeDirectory implements IFileOperation {
+	//field defintions
 	private String homeDirectory; 
 	private List<FileWrap>  files;
 	private boolean isSorted=false; 
 	
+	//default constructor
 	public HomeDirectory() {
+		// Set user home folder as home directory
 		this.homeDirectory= FileSystemUtil.HOME_DIR;
 		files= new ArrayList<>();
+		// populate the files in the given home directory
 		this.populate();
 	}
 	public HomeDirectory(String homeDirectory) {
 		this.homeDirectory= homeDirectory;
 	}
+	//repopulates list of files in a given directory
 	public void populate() {
 		this.files.clear();
 		File folder= new File(this.homeDirectory);
@@ -34,6 +39,7 @@ public class HomeDirectory implements IFileOperation {
 	public void setHomeDirectory(String homeDirectory) {
 		this.homeDirectory = homeDirectory;
 	}
+	//creates a file using given file name
 	@Override
 	public boolean create(String filename)  throws FileOperationException {
 
@@ -52,6 +58,7 @@ public class HomeDirectory implements IFileOperation {
 			throw new FileOperationException("File can not be deleted !");
 		}
 	}
+	//searches a given file using argument name
 	@Override
 	public FileWrap search(String filename) {
 		FileWrap key= new FileWrap(this.homeDirectory, filename);
@@ -60,6 +67,7 @@ public class HomeDirectory implements IFileOperation {
 		return this.linearSearch(key);
 
 	}
+	//Deletes the given filename from current working directory
 	@Override
 	public boolean delete(String filename) throws FileOperationException {
 		if(this.search(filename) == null)
@@ -74,6 +82,7 @@ public class HomeDirectory implements IFileOperation {
 			return false; 
 		}
 	}
+	// Displays list in as ascending order to console
 	@Override
 	public void display() {
 		if(this.files.size() <= 0 ) {
@@ -90,12 +99,9 @@ public class HomeDirectory implements IFileOperation {
 		System.out.println("********************************************");
 
 	}
+	// Displays list in as descending order to console
 	@Override
 	public void displaySorted() {
-//		System.out.println("FILE LIST IN DESCENDING ORDER ----");
-//		System.out.println("_________________________________________");
-//		this.sortDescending();
-//		this.files.stream().sorted(new FileComparerDescending()).forEach(a->a.display());
 		if(this.files.size() <= 0 ) {
 			System.out.println("********************************************");
 			System.out.println(" NOT FILE IN DIRECTORY - " + this.homeDirectory);
@@ -109,6 +115,7 @@ public class HomeDirectory implements IFileOperation {
 		System.out.println("*************** FILE LIST END **************");
 		System.out.println("********************************************");
 	}
+	//sorts the list ascending order
 	@Override
 	public boolean sortAscending() {
 		try {
@@ -119,6 +126,7 @@ public class HomeDirectory implements IFileOperation {
 			return false; 
 		}
 	}
+	//sorts the list descending order
 	@Override
 	public boolean sortDescending() {
 		try {
@@ -128,10 +136,12 @@ public class HomeDirectory implements IFileOperation {
 			return false; 
 		}
 	}
+	//returns the array representation of the list
 	@Override
 	public FileWrap[] getAll() {
 		return (FileWrap[]) this.files.toArray();
 	}
+	//Determines if the list is sorted or not
 	public boolean isSorted() {
 		if(this.files == null || this.files.size() <= 1)
 			return true; 
@@ -140,7 +150,7 @@ public class HomeDirectory implements IFileOperation {
 				return false; 
 		return true; 
 	}
-	
+	// Binary search of a given fileWrapp in the list
 	private FileWrap binarySearch(int l, int r, FileWrap fw) {
 	    if (r >= l) {
 	        int mid = l + (r - l) / 2;
@@ -155,6 +165,7 @@ public class HomeDirectory implements IFileOperation {
 	    }
 	    return null;
 	}
+	// Linear search of a given fileWrapp in the list
 	private FileWrap linearSearch(FileWrap key) {
 		for(int i=0; i < this.files.size(); i++)
 			if(this.files.get(i).equals(key))

@@ -11,10 +11,15 @@ import com.lockedme.menu.MenuDriver;
 
 public class Main {
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
+		// Main menu
 		ApplicationInfo app= new ApplicationInfo();
+		
 		HomeDirectory homeDirectory= new HomeDirectory();
+		
 		MenuDriver menu= new MenuDriver(app, homeDirectory);
+		
+		//calls the UI of the app
 		menu.driveMenu();
 	}
 	

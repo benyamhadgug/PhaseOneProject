@@ -1,7 +1,9 @@
 package com.lockedme.filesys;
 
 import java.util.Comparator;
-
+	/*
+	 * Functional interface definition for sorting files ascendingly
+	 */
 public class FileComparerDescending implements Comparator<FileWrap> {
 
 	@Override
